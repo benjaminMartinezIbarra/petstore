@@ -1,0 +1,141 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  description: Api de gestion du petstore
+  title: API Petstore
+
+paths:
+  /pets:
+    post:
+      summary: Créer un nouvel animal
+      operationId: createPet
+      tags:
+      - Pet
+      requestBody:
+        description: > 
+          Paramètres de création d'un animal
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewPet'
+      responses:
+              '201':
+                description: >
+                 A new Pet created
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/Pet'
+  /pets/{id}:
+    get:
+      summary: Get a Pet by id
+      operationId: getPet
+      tags:
+      - Pet
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+          example: "123-123-123-123"
+      responses:
+        '200':
+          description: >
+            L'animal selon son id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+
+components:
+  schemas:
+    NewPet:
+      description: >
+        Représente un animal
+      type: object
+      required:
+      - name
+      - category
+      properties:
+        name:
+          description: >
+            nom de l'animal
+          type: string
+          example: "Rex"
+        category:
+          description: >
+           type de l'animal. Un animal peut être de type
+
+            * 'DOG' un chien
+            * 'CAT' un chat
+            * 'BIRD' un oiseau
+          type: string
+          enum:
+          - DOG
+          - CAT
+          - BIRD
+        status:
+          description: >
+           status de l'animal. Un animal peut être de status
+
+            * 'SOLD'
+            * 'AVBAILABLE'
+            * 'RESERVED'
+            * 'DEAD'
+
+          type: string
+          enum:
+          - SOLD
+          - AVBAILABLE
+          - RESERVED
+          - DEAD
+    Pet:
+      description: >
+        Représente un animal
+      type: object
+      required:
+      - id
+      - name
+      - category
+      properties:
+        id:
+          description: >
+            id de l'animal
+          type: string
+          format: uuid
+          example: "1234-1234-1234-1234"
+        name:
+          description: >
+            nom de l'animal
+          type: string
+          example: "Rex"
+        category:
+          description: >
+           type de l'animal. Un animal peut être de type
+
+            * 'DOG' un chien
+            * 'CAT' un chat
+            * 'BIRD' un oiseau
+          type: string
+          enum:
+          - DOG
+          - CAT
+          - BIRD
+        status:
+          description: >
+           status de l'animal. Un animal peut être de status
+
+            * 'SOLD'
+            * 'AVAILABLE'
+            * 'RESERVED'
+            * 'DEAD'
+
+          type: string
+          enum:
+          - SOLD
+          - AVAILABLE
+          - RESERVED
+          - DEAD
